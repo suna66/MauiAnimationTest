@@ -24,12 +24,6 @@ namespace AnimeTest
             timer.Tick += (s, e) => this.Invalidate();
             timer.Start();
         }
-
-        private bool TimerLoop()
-        {
-            this.Invalidate();
-            return true;
-        }
     }
 
 	public class GraphicsDrawable : IDrawable

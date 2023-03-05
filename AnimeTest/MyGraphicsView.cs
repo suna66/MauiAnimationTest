@@ -30,9 +30,22 @@ namespace AnimeTest
 	{
 		private int _pointX = 0;
 		private int _direct = 1;
+		private int _previusTick = 0;
 
-		public void Draw(ICanvas canvas, RectF dirtyRect)
+		public GraphicsDrawable()
 		{
+			_previusTick = Environment.TickCount;
+		}
+
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+		{
+			int currentTick = Environment.TickCount;
+
+
+            canvas.FontColor = Colors.Blue;
+            canvas.FontSize = 18;
+            canvas.DrawString($"{1000/(currentTick - _previusTick)}FPS", 0, 0, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+
             canvas.FillColor = Colors.YellowGreen;
 			canvas.FillCircle(new Point(_pointX, 100), 10.0d);
             _pointX += _direct * 10;
@@ -44,6 +57,7 @@ namespace AnimeTest
 			{
 				_direct = 1;
 			}
+			_previusTick = currentTick;
         }
 	}
 }

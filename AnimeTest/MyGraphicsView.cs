@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Maui.Graphics;
+using GFont = Microsoft.Maui.Graphics.Font;
 
 namespace AnimeTest
 {
@@ -13,7 +14,9 @@ namespace AnimeTest
 			this.Drawable = _drawable;
 			this.BackgroundColor = Colors.White;
             this.Loaded += OnLoad;
-
+			this.StartInteraction += startInteraction;
+			this.DragInteraction += dragInteraction;
+			this.EndInteraction += endInteraction;
 		}
 
 		private void OnLoad(object sender, EventArgs e)
@@ -23,6 +26,21 @@ namespace AnimeTest
             timer.Interval = ts;
             timer.Tick += (s, e) => this.Invalidate();
             timer.Start();
+        }
+
+		private void startInteraction(object sender, TouchEventArgs e)
+		{
+			Console.WriteLine("start interaction");
+		}
+
+		private void dragInteraction(object sender, TouchEventArgs e)
+		{
+            Console.WriteLine("drag interaction");
+        }
+
+		private void endInteraction(object sender, TouchEventArgs e)
+		{
+            Console.WriteLine("end interaction");
         }
     }
 
@@ -44,6 +62,7 @@ namespace AnimeTest
 
             canvas.FontColor = Colors.Blue;
             canvas.FontSize = 18;
+			canvas.Font = GFont.DefaultBold;
             canvas.DrawString($"{1000/(currentTick - _previusTick)}FPS", 0, 0, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
 
             canvas.FillColor = Colors.YellowGreen;

@@ -41,6 +41,7 @@ namespace AnimeTest
 		private void endInteraction(object sender, TouchEventArgs e)
 		{
             Console.WriteLine("end interaction");
+			_drawable.ChangeColor();
         }
     }
 
@@ -49,10 +50,29 @@ namespace AnimeTest
 		private int _pointX = 0;
 		private int _direct = 1;
 		private int _previusTick = 0;
+		private Color[] pattern =
+		{
+			Colors.Red,
+			Colors.Violet,
+			Colors.Blue,
+			Colors.Chocolate,
+			Colors.DarkGreen,
+			Colors.GreenYellow
+		};
+		private int _color = 0;
 
 		public GraphicsDrawable()
 		{
 			_previusTick = Environment.TickCount;
+		}
+
+		public void ChangeColor()
+		{
+			_color++;
+			if (_color >= pattern.Length)
+			{
+				_color = 0;
+			}
 		}
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -60,12 +80,12 @@ namespace AnimeTest
 			int currentTick = Environment.TickCount;
 
 
-            canvas.FontColor = Colors.Blue;
+            canvas.FontColor = pattern[_color];
             canvas.FontSize = 18;
 			canvas.Font = GFont.DefaultBold;
             canvas.DrawString($"{1000/(currentTick - _previusTick)}FPS", 0, 0, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
 
-            canvas.FillColor = Colors.YellowGreen;
+            canvas.FillColor = pattern[_color];
 			canvas.FillCircle(new Point(_pointX, 100), 10.0d);
             _pointX += _direct * 10;
 			if (_pointX >= 600)
